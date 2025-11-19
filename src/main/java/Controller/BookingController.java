@@ -78,5 +78,25 @@ public class BookingController {
     }
 
 
+    @DeleteMapping("/{regNumber}")
+    public ResponseEntity<?> deleteBooking(@PathVariable String regNumber){
+
+        if(bookingService.getBookingByRegNumber(regNumber).isEmpty()){
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Booking with RegNumber " + regNumber + " does not exist");
+
+
+        }else{
+
+            bookingService.remove(bookingService.getBookingByRegNumber(regNumber).get());
+
+            return ResponseEntity.ok("Booking with RegNumber " + regNumber + " deleted!");
+        }
+
+
+    }
+
+
 
 }
