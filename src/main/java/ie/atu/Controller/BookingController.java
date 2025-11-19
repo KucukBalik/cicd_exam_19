@@ -40,6 +40,7 @@ public class BookingController {
         bookingService.create(booking);
 
 
+
         return ResponseEntity
                 .created(URI.create(("/api/bookings") + booking.getRegNumber()))
                 .body("Booking with RegNumber " + booking.getRegNumber() + " created");
