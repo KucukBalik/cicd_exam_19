@@ -1,12 +1,10 @@
 package ie.atu.Model;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.validation.annotation.Validated;
 
 @NoArgsConstructor
 @Data

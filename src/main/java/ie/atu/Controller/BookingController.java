@@ -1,10 +1,10 @@
 package ie.atu.Controller;
 
 
+import ie.atu.GlobalExceptionHandler.DuplicateRegNumberException;
 import ie.atu.Model.Booking;
 import ie.atu.Service.BookingService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -32,9 +32,13 @@ public class BookingController {
 
         if(maybe.isPresent()){
 
-            throw new IllegalArgumentException("RegNumber already exists");
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("Booking with RegNumber " + booking.getRegNumber() + " already exists");
 
         }
+
+        bookingService.create(booking);
+
 
         return ResponseEntity
                 .created(URI.create(("/api/bookings") + booking.getRegNumber()))
@@ -47,12 +51,15 @@ public class BookingController {
 
 
     @GetMapping("/{regNumber}")
-    public ResponseEntity<?> getBookingByRegNumber(@PathVariable String regNumber){
+    public ResponseEntity<?> getBookingByRegNumber(@PathVariable @Valid String regNumber){
 
         Optional<Booking> maybe = bookingService.getBookingByRegNumber(regNumber);
         if(maybe.isPresent()){
+            bookingService.getBookingByRegNumber(regNumber);
+
             return ResponseEntity.ok(maybe.get());
-        }else{
+        }
+        else{
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Booking with RegNumber " + regNumber + " does not exist");
         }

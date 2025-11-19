@@ -3,7 +3,6 @@ package ie.atu.Service;
 
 import ie.atu.GlobalExceptionHandler.BookingNotFoundException;
 import ie.atu.GlobalExceptionHandler.DuplicateRegNumberException;
-import ie.atu.GlobalExceptionHandler.InvalidBookingDataException;
 import ie.atu.Model.Booking;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,7 @@ public class BookingService {
 
     private final List<Booking> storage = new ArrayList<>();
 
-    public Optional<Booking> getBookingByRegNumber(@Valid String regNumber){
+    public Optional<Booking> getBookingByRegNumber(String regNumber){
 
         for(Booking booking : storage){
             if(booking.getRegNumber().equals(regNumber)){
@@ -48,13 +47,12 @@ public class BookingService {
     }
 
 
-    public Booking remove(Booking booking){
+    public void remove(Booking booking){
 
         if(getBookingByRegNumber(booking.getRegNumber()).isPresent()){
 
             storage.remove(booking);
 
-            return booking;
         }
 
         throw new BookingNotFoundException("Booking does not exist");
@@ -63,13 +61,12 @@ public class BookingService {
     }
 
 
-    public Booking update(Booking booking){
+    public void update(Booking booking){
 
         if(getBookingByRegNumber(booking.getRegNumber()).isPresent()){
 
             storage.set(storage.indexOf(getBookingByRegNumber(booking.getRegNumber()).get()),booking);
 
-            return booking;
         }
 
         throw new BookingNotFoundException("Booking does not exist");
