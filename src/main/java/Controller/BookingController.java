@@ -70,7 +70,7 @@ public class BookingController {
 
             bookingService.update(booking);
 
-            return ResponseEntity.ok("Booking with RegNumber " + regNumber + " updated");
+            return ResponseEntity.ok("Booking with RegNumber " + regNumber + " updated!");
 
         }
 
