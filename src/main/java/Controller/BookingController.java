@@ -41,6 +41,8 @@ public class BookingController {
     }
 
 
+
+
     @GetMapping("/{regNumber}")
     public ResponseEntity<?> getBookingByRegNumber(@PathVariable String regNumber){
 
@@ -50,6 +52,26 @@ public class BookingController {
         }else{
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Booking with RegNumber " + regNumber + " does not exist");
+        }
+
+
+    }
+
+
+    @PutMapping("/{regNumber}")
+    public ResponseEntity<?> updateBooking(@PathVariable String regNumber,@RequestBody @Valid Booking booking){
+
+        if(bookingService.getBookingByRegNumber(regNumber).isEmpty()){
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Booking with RegNumber " + regNumber + " does not exist");
+
+        }else{
+
+            bookingService.update(booking);
+
+            return ResponseEntity.ok("Booking with RegNumber " + regNumber + " updated");
+
         }
 
 
