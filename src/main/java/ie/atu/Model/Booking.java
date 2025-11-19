@@ -1,4 +1,4 @@
-package Model;
+package ie.atu.Model;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
